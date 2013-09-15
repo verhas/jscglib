@@ -121,6 +121,20 @@ public class JSC {
 		return this;
 	}
 
+	private boolean blockCommand = false;
+
+	public boolean isBlockCommand() {
+		return blockCommand;
+	}
+
+	public JSC commandBlock(String command) {
+		JSC tool = new JSC();
+		tool.setJscType(JSCType.COMMAND);
+		tool.simpleCommand = command;
+		tool.blockCommand = true;
+		return command(tool);
+	}
+
 	private final List<JSC> commands = new LinkedList<>();
 
 	public JSC command(String command) {
@@ -203,14 +217,12 @@ public class JSC {
 
 	private String simpleCommand;
 
-	private final List<JSC> constructors = new LinkedList<>();
-
 	public JSC constructor(JSC constructor) {
 		return constructors(constructor);
 	}
 
 	public JSC constructors(JSC... constructors) {
-		this.constructors.addAll(Arrays.asList(constructors));
+		this.declaredBlocks.addAll(Arrays.asList(constructors));
 		return this;
 	}
 
@@ -240,6 +252,7 @@ public class JSC {
 	public JSC constructor() {
 		JSC tool = new JSC();
 		tool.setJscType(JSCType.CONSTRUCTOR);
+		tool.identifier(this.getIdentifier());
 		return constructor(tool);
 	}
 
@@ -331,7 +344,4 @@ public class JSC {
 		return simpleCommand;
 	}
 
-	protected List<JSC> getConstructors() {
-		return constructors;
-	}
 }

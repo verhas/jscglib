@@ -18,6 +18,12 @@ public class JSCPrinter {
 		case ARGUMENT:
 			retval = pprintArgument(code);
 			break;
+		case COMMAND:
+			retval = pprintCommand(code);
+			break;
+		case CONSTRUCTOR:
+			retval = pprintConstructor(code);
+			break;
 		default:
 			throw new IllegalArgumentException("The type of the JSC object '"
 					+ code.getJscType().name() + "' can not be printed");
@@ -25,15 +31,38 @@ public class JSCPrinter {
 		return retval;
 	}
 
+	public static String pprintCommand(JSC code) {
+		CodeStringBuilder sb = new CodeStringBuilder().append(code
+				.getSimpleCommand());
+		if (!code.isBlockCommand()) {
+			sb.sc();
+		}
+		return sb.toString();
+	}
+
+	public static String pprintConstructor(JSC code) {
+		CodeStringBuilder sb = new CodeStringBuilder()
+				.appendLines(code.getAnnotations())
+				.append(null, Modifier.toString(code.getModifiers()), " ")
+				.append(code.getIdentifier())
+				.append("(").appendList(code.getArguments()).append(")")
+				.appendList("throws ", code.getExceptions(), null).begin();
+		for (JSC command : code.getCommands()) {
+			sb.append(command.toString());
+		}
+		sb.end();
+		return sb.toString();
+	}
+
 	public static String pprintMethod(JSC code) {
 		CodeStringBuilder sb = new CodeStringBuilder()
 				.appendLines(code.getAnnotations())
-				.append(null,Modifier.toString(code.getModifiers())," ")
+				.append(null, Modifier.toString(code.getModifiers()), " ")
 				.append(code.getType()).space().append(code.getIdentifier())
 				.append("(").appendList(code.getArguments()).append(")")
 				.appendList("throws ", code.getExceptions(), null).begin();
 		for (JSC command : code.getCommands()) {
-			sb.append(command.getSimpleCommand()).sc();
+			sb.append(command.toString());
 		}
 		sb.end();
 		return sb.toString();

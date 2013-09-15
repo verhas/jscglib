@@ -1,9 +1,11 @@
 package com.javax0.jscglib;
 
+import static com.javax0.jscglib.JSCBuilder.field;
+import static com.javax0.jscglib.JSCBuilder.klass;
+import static com.javax0.jscglib.JSCBuilder.method;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import static com.javax0.jscglib.JSCBuilder.*;
 
 public class JSCTest {
 
@@ -124,7 +126,19 @@ public class JSCTest {
 						.command("System.out.println(\"hello\")")).toString();
 		assertEquals(expected, actual);
 	}
-		
+
+	@Test
+	public void given_AnClassWithPackageAndAMethodWithCommandBlock_when_GeneratingCode_then_ReturnsProperSourceCode() {
+		final String expected = "package com.javax0.jscglib;class TestClass{"
+				+ "java.lang.Object name(java.lang.Object arg){"
+				+ "try{}finally{}}}";
+		String actual = klass("TestClass")
+				.inPackage(this.getClass().getPackage())
+				.add(method(Object.class, "name").argument(Object.class, "arg")
+						.commandBlock("try{}finally{}")).toString();
+		assertEquals(expected, actual);
+	}
+
 	@Test
 	public void given_AnClassWithPackageAndAMethodStringReturnType_when_GeneratingCode_then_ReturnsProperSourceCode() {
 		final String expected = "package com.javax0.jscglib;class TestClass{"
@@ -136,7 +150,14 @@ public class JSCTest {
 						.command("System.out.println(\"hello\")")).toString();
 		assertEquals(expected, actual);
 	}
-	
+
+	@Test
+	public void given_AnClassWithDefaultConstructor_when_GeneratingCode_then_ReturnsProperSourceCode() {
+		final String expected = "class TestClass{TestClass(){}}";
+		String actual = klass("TestClass").constructor().toString();
+		assertEquals(expected, actual);
+	}
+
 	private void assertEquals(final String expected, final String actual) {
 		// remove all duplicated space
 		Assert.assertEquals(despaced(expected), despaced(actual));
