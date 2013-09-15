@@ -48,6 +48,7 @@ public class JSCBuilder {
 
 	public static JSC method(String name) {
 		JSC tool = new JSC();
+		tool.identifier(name);
 		tool.setJscType(JSCType.METHOD);
 		return tool;
 	}

@@ -28,7 +28,7 @@ public class JSCPrinter {
 	public static String pprintMethod(JSC code) {
 		CodeStringBuilder sb = new CodeStringBuilder()
 				.appendLines(code.getAnnotations())
-				.append(Modifier.toString(code.getModifiers()))
+				.append(null,Modifier.toString(code.getModifiers())," ")
 				.append(code.getType()).space().append(code.getIdentifier())
 				.append("(").appendList(code.getArguments()).append(")")
 				.appendList("throws ", code.getExceptions(), null).begin();
@@ -66,8 +66,8 @@ public class JSCPrinter {
 		}
 		sb.appendLines(code.getAnnotations())
 				.append(Modifier.toString(code.getModifiers()))
-				.append("class ").append(code.getIdentifier())
-				.append("extends", code.getParentClass(), null)
+				.append(" class ").append(code.getIdentifier())
+				.append(" extends ", code.getParentClass(), null)
 				.appendList(" implements ", code.getIntrfaces(), null).begin();
 		//
 		for (JSC jsc : code.getDeclaredBlocks()) {
