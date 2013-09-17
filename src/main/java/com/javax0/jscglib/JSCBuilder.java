@@ -27,8 +27,9 @@ public class JSCBuilder {
 		return tool;
 	}
 
-	public static JSC constructor() {
+	public static JSC constructor(JSC klass) {
 		JSC tool = new JSC();
+		tool.identifier(klass.getIdentifier());
 		tool.setJscType(JSCType.CONSTRUCTOR);
 		return tool;
 	}
