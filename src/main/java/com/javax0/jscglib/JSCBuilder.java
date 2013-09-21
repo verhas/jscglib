@@ -71,6 +71,9 @@ public class JSCBuilder {
 	}
 
 	public static JSC command(String command) {
-		return new JSC().command(command);
+		JSC tool = new JSC();
+		tool.setJscType(JSCType.COMMAND);
+		tool.simpleCommand = command;
+		return tool;
 	}
 }

@@ -71,7 +71,7 @@ public class JSCPrinter {
 	public static String pprintField(JSC code) {
 		CodeStringBuilder sb = new CodeStringBuilder()
 				.appendLines(code.getAnnotations())
-				.append(Modifier.toString(code.getModifiers()))
+				.append(" ",Modifier.toString(code.getModifiers())," ")
 				.append(code.getType())
 				.space()
 				.append(code.getIdentifier())

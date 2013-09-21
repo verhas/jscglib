@@ -215,15 +215,13 @@ public class JSC {
 		return setExpression(expression);
 	}
 
-	private String simpleCommand;
+	String simpleCommand;
 
-	public JSC constructor(JSC constructor) {
-		return constructors(constructor);
-	}
-
-	public JSC constructors(JSC... constructors) {
-		this.declaredBlocks.addAll(Arrays.asList(constructors));
-		return this;
+	public JSC constructor() {
+		JSC tool = new JSC();
+		tool.setJscType(JSCType.CONSTRUCTOR);
+		tool.identifier(this.getIdentifier());
+		return add(tool);
 	}
 
 	public JSC field(Class<?> type, String name) {
@@ -240,20 +238,6 @@ public class JSC {
 		tool.returnType(type);
 		tool.setJscType(JSCType.FIELD);
 		return add(tool);
-	}
-
-	public JSC field(String name) {
-		JSC tool = new JSC();
-		tool.identifier(name);
-		tool.setJscType(JSCType.FIELD);
-		return add(tool);
-	}
-
-	public JSC constructor() {
-		JSC tool = new JSC();
-		tool.setJscType(JSCType.CONSTRUCTOR);
-		tool.identifier(this.getIdentifier());
-		return constructor(tool);
 	}
 
 	public JSC argument(Class<?> type, String identifier) {
