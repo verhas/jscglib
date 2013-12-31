@@ -362,6 +362,13 @@ public class JSC {
 		return this;
 	}
 
+	public JSC exceptions(Class<?>[] throwables) {
+		for (Class<?> throwable : throwables) {
+			this.exceptions.add(throwable.getName());
+		}
+		return this;
+	}
+
 	private String expression;
 
 	private JSC setExpression(String expression) {
