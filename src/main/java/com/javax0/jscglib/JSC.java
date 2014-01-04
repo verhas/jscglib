@@ -171,7 +171,7 @@ public class JSC {
 	private final List<JSC> declaredBlocks = new LinkedList<>();
 
 	/**
-	 * Add some block to the class, like a method, a construtor aor just
+	 * Add some block to the class, like a method, a constructor or just
 	 * anything that can be in a class.
 	 * 
 	 * @param jsc
